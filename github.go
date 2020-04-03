@@ -3,11 +3,12 @@ package latest
 import (
 	"context"
 	"fmt"
-	"net/url"
-	"strings"
-
 	"github.com/google/go-github/github"
 	"github.com/hashicorp/go-version"
+	"net/http"
+	"net/url"
+	"strings"
+	"time"
 )
 
 // FixVersionStrFunc is function to fix version string
@@ -91,7 +92,7 @@ func DeleteFrontV() FixVersionStrFunc {
 }
 
 func (g *GithubTag) newClient() *github.Client {
-	client := github.NewClient(nil)
+	client := github.NewClient(&http.Client{Timeout: 5 * time.Second})
 	if g.URL != "" {
 		client.BaseURL, _ = url.Parse(g.URL)
 	}

@@ -84,7 +84,7 @@ type CheckResponse struct {
 
 // Check fetches last version information from its source
 // and compares with target and return result (CheckResponse).
-func Check(s Source, target string) (*CheckResponse, error) {
+func Check(s Source, target string, timeout time.Duration) (*CheckResponse, error) {
 
 	if os.Getenv(EnvGoLatestDisable) != "" {
 		return &CheckResponse{}, nil
@@ -101,7 +101,7 @@ func Check(s Source, target string) (*CheckResponse, error) {
 		return nil, err
 	}
 
-	fr, err := s.Fetch()
+	fr, err := s.Fetch(timeout)
 	if err != nil {
 		return nil, err
 	}

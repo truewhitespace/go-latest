@@ -91,8 +91,8 @@ func DeleteFrontV() FixVersionStrFunc {
 	}
 }
 
-func (g *GithubTag) newClient() *github.Client {
-	client := github.NewClient(&http.Client{Timeout: 5 * time.Second})
+func (g *GithubTag) newClient(timeout time.Duration) *github.Client {
+	client := github.NewClient(&http.Client{Timeout: timeout})
 	if g.URL != "" {
 		client.BaseURL, _ = url.Parse(g.URL)
 	}
@@ -118,12 +118,12 @@ func (g *GithubTag) Validate() error {
 	return nil
 }
 
-func (g *GithubTag) Fetch() (*FetchResponse, error) {
+func (g *GithubTag) Fetch(timeout time.Duration) (*FetchResponse, error) {
 
 	fr := newFetchResponse()
 
 	// Create a client
-	client := g.newClient()
+	client := g.newClient(timeout)
 	tags, resp, err := client.Repositories.ListTags(context.Background(), g.Owner, g.Repository, nil)
 	if err != nil {
 		return fr, err

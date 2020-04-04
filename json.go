@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	defaultDialTimeout = 5 * time.Second
+	defaultDialTimeout = 3 * time.Second
 )
 
 // JSON is used to get version information as json format from remote host.
@@ -74,7 +74,7 @@ func (j *JSON) Validate() error {
 	return nil
 }
 
-func (j *JSON) Fetch() (*FetchResponse, error) {
+func (j *JSON) Fetch(timeout time.Duration) (*FetchResponse, error) {
 
 	fr := newFetchResponse()
 
@@ -96,8 +96,12 @@ func (j *JSON) Fetch() (*FetchResponse, error) {
 		},
 	}
 
+	if timeout <= defaultDialTimeout {
+		timeout += time.Second
+	}
 	client := &http.Client{
 		Transport: t,
+		Timeout:   timeout,
 	}
 
 	resp, err := client.Do(req)

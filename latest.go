@@ -24,10 +24,10 @@ package latest
 
 import (
 	"fmt"
+	"github.com/hashicorp/go-version"
 	"os"
 	"sort"
-
-	"github.com/hashicorp/go-version"
+	"time"
 )
 
 // EnvGoLatestDisable is environmental variable to disable go-latest
@@ -44,7 +44,7 @@ type Source interface {
 
 	// Fetch is called in Check to fetch information from remote sources.
 	// After fetching, it will convert it into common expression (FetchResponse)
-	Fetch() (*FetchResponse, error)
+	Fetch(timeout time.Duration) (*FetchResponse, error)
 }
 
 // FetchResponse the commom response of Fetch request.

@@ -6,7 +6,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/tcnksm/go-latest"
+	"github.com/truewhitespace/go-latest"
 )
 
 type CLI struct {

@@ -1,4 +1,4 @@
-module github.com/cvila84/go-latest
+module github.com/truewhitespace/go-latest
 
 go 1.16
 

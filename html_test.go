@@ -5,6 +5,7 @@ import (
 	"net/http/httptest"
 	"sort"
 	"testing"
+	"time"
 
 	"github.com/hashicorp/go-version"
 	"golang.org/x/net/html"
@@ -43,7 +44,7 @@ func TestHTMLFetch(t *testing.T) {
 			Scrap: tt.scrap,
 		}
 
-		fr, err := h.Fetch()
+		fr, err := h.Fetch(1 * time.Second)
 		if err != nil {
 			t.Fatalf("#%d Fetch() expects error:%q to be nil", i, err.Error())
 		}

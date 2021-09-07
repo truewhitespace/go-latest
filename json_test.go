@@ -4,6 +4,7 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+	"time"
 )
 
 func TestJSON_implement(t *testing.T) {
@@ -89,7 +90,7 @@ func TestJSONFetch(t *testing.T) {
 			Response: tt.response,
 		}
 
-		fr, err := j.Fetch()
+		fr, err := j.Fetch(1 * time.Second)
 		if err != nil {
 			t.Fatalf("#%d Fetch() expects error:%q to be nil", i, err.Error())
 		}

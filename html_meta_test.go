@@ -3,6 +3,7 @@ package latest
 import (
 	"net/http/httptest"
 	"testing"
+	"time"
 )
 
 func TestHTMLMeta_implement(t *testing.T) {
@@ -33,7 +34,7 @@ func TestHTMLMetaFetch(t *testing.T) {
 			Name: tt.name,
 		}
 
-		fr, err := h.Fetch()
+		fr, err := h.Fetch(1 * time.Second)
 		if err != nil {
 			t.Fatalf("#%d Fetch() expects error:%q to be nil", i, err.Error())
 		}

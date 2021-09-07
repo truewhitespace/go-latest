@@ -8,6 +8,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"time"
 
 	"github.com/hashicorp/go-version"
 )
@@ -65,7 +66,7 @@ func (h *HTML) Validate() error {
 	return nil
 }
 
-func (h *HTML) Fetch() (*FetchResponse, error) {
+func (h *HTML) Fetch(timeout time.Duration) (*FetchResponse, error) {
 
 	fr := newFetchResponse()
 
@@ -87,8 +88,12 @@ func (h *HTML) Fetch() (*FetchResponse, error) {
 		},
 	}
 
+	if timeout <= defaultDialTimeout {
+		timeout += time.Second
+	}
 	client := &http.Client{
 		Transport: t,
+		Timeout:   timeout,
 	}
 
 	resp, err := client.Do(req)

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"strings"
+	"time"
 
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
@@ -35,8 +36,8 @@ func (hm *HTMLMeta) Validate() error {
 	return hm.newHTML().Validate()
 }
 
-func (hm *HTMLMeta) Fetch() (*FetchResponse, error) {
-	return hm.newHTML().Fetch()
+func (hm *HTMLMeta) Fetch(timeout time.Duration) (*FetchResponse, error) {
+	return hm.newHTML().Fetch(timeout)
 }
 
 type metaTagScrap struct {
